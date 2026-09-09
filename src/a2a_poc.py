@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from a2a.types import (
+from a2a.compat.v0_3.types import (
     AgentCapabilities,
     AgentCard,
     AgentSkill,

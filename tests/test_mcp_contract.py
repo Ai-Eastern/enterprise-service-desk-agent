@@ -10,10 +10,10 @@ class McpContractTest(unittest.IsolatedAsyncioTestCase):
         tools = await mcp.list_tools()
         self.assertEqual([tool.name for tool in tools], ["get_service_status"])
         tool = tools[0]
-        self.assertEqual(set(tool.inputSchema["required"]), {"user_id", "product_id"})
-        self.assertNotIn("role", tool.inputSchema["properties"])
-        self.assertTrue(tool.annotations.readOnlyHint)
-        self.assertFalse(tool.annotations.destructiveHint)
+        self.assertEqual(set(tool.input_schema["required"]), {"user_id", "product_id"})
+        self.assertNotIn("role", tool.input_schema["properties"])
+        self.assertTrue(tool.annotations.read_only_hint)
+        self.assertFalse(tool.annotations.destructive_hint)
 
 
 if __name__ == "__main__":

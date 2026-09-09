@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from a2a.types import TaskState
+from a2a.compat.v0_3.types import TaskState
 
 from src.a2a_poc import build_diagnostic_agent_card, run_diagnostic_task
 
