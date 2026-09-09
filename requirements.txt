@@ -7,3 +7,6 @@ pydantic==2.12.5
 langgraph==1.2.7
 langgraph-checkpoint-sqlite==3.1.0
 pyarrow==24.0.0
+
+# 2025 H1 MCP pilot baseline (released 2025-06-12).
+mcp==1.9.4
