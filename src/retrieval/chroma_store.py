@@ -168,9 +168,8 @@ def _embed(texts: list[str]) -> list[list[float]]:
 
 
 def _require_cosine_collection(collection: object) -> None:
-    configuration = getattr(collection, "configuration", {})
-    hnsw = configuration.get("hnsw") if isinstance(configuration, dict) else None
-    if not isinstance(hnsw, dict) or hnsw.get("space") != "cosine":
+    metadata = getattr(collection, "metadata", {})
+    if not isinstance(metadata, dict) or metadata.get("hnsw:space") != "cosine":
         raise ValueError("Chroma collection 必须使用 cosine 距离空间，请更换空的运行目录后重新入库。")
 
 
@@ -188,20 +187,20 @@ def ingest(
 
     chroma_path = chroma_path.resolve()
     chroma_path.mkdir(parents=True, exist_ok=True)
-    with chromadb.PersistentClient(path=str(chroma_path)) as client:
-        collection = client.get_or_create_collection(
-            name=COLLECTION_NAME,
-            configuration={"hnsw": {"space": "cosine"}},
-            embedding_function=None,
-        )
-        _require_cosine_collection(collection)
-        collection.upsert(
-            ids=[chunk.chunk_id for chunk in chunks],
-            documents=[chunk.text for chunk in chunks],
-            metadatas=[chunk.metadata for chunk in chunks],
-            embeddings=_embed([chunk.text for chunk in chunks]),
-        )
-        chunk_count = collection.count()
+    client = chromadb.PersistentClient(path=str(chroma_path))
+    collection = client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+        embedding_function=None,
+    )
+    _require_cosine_collection(collection)
+    collection.upsert(
+        ids=[chunk.chunk_id for chunk in chunks],
+        documents=[chunk.text for chunk in chunks],
+        metadatas=[chunk.metadata for chunk in chunks],
+        embeddings=_embed([chunk.text for chunk in chunks]),
+    )
+    chunk_count = collection.count()
     return {
         "collection": COLLECTION_NAME,
         "model_revision": MODEL_REVISION,
@@ -234,15 +233,15 @@ def search(
     allowed = _allowed_values(allowed_visibilities)
     where = {"visibility": {"$in": list(allowed)}}
 
-    with chromadb.PersistentClient(path=str(chroma_path.resolve())) as client:
-        collection = client.get_collection(name=COLLECTION_NAME, embedding_function=None)
-        _require_cosine_collection(collection)
-        response = collection.query(
-            query_embeddings=_embed([QUERY_INSTRUCTION + cleaned_query]),
-            n_results=top_k,
-            where=where,
-            include=["documents", "metadatas", "distances"],
-        )
+    client = chromadb.PersistentClient(path=str(chroma_path.resolve()))
+    collection = client.get_collection(name=COLLECTION_NAME, embedding_function=None)
+    _require_cosine_collection(collection)
+    response = collection.query(
+        query_embeddings=_embed([QUERY_INSTRUCTION + cleaned_query]),
+        n_results=top_k,
+        where=where,
+        include=["documents", "metadatas", "distances"],
+    )
     ids = response["ids"][0]
     documents = response["documents"][0]
     metadatas = response["metadatas"][0]

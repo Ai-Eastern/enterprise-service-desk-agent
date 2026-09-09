@@ -36,13 +36,19 @@
 
 ## 快速开始
 
-环境：Windows、Python 3.11 x64。
+环境：Windows x64、Python 3.10.11。依赖与 API 口径冻结在 2024-12-31；后续标签仅作为路线说明，不倒灌到本版本。
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
 .\.venv\Scripts\python.exe scripts/generate_demo_data.py
 .\.venv\Scripts\python.exe scripts/ingest.py
 .\.venv\Scripts\python.exe scripts/search.py --user-id readonly-demo --query "如何处理服务异常"
+```
+
+测试（不会下载模型；若未创建冻结环境，不要安装依赖后宣称已通过）：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest tests.test_v01_contracts tests.test_v01_rag_flow -v
 ```
 
 启动可能需要人工审批的工作流：
@@ -62,7 +68,7 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
 
 ## 证据边界
 
-本版本是本地工程 Demo。代码与自动化检查可以证明权限、路由、人工门禁和幂等合同；不能证明真实国企部署、生产 IAM、真实用户数据、800+ 日任务量、Milvus/PostgreSQL/Redis 集群、GUI 或用户验收。
+本版本是 Windows x64 上的本地、脱敏、虚构数据 Demo：单 Agent、RAG、LangGraph 人工门禁和本地 SQLite/Chroma；不包含 MCP、A2A 或多 Agent 协作。代码与自动化检查只能证明静态合同和聚焦检查覆盖的权限、路由、引用去重、人工门禁与幂等路径；不能证明生产部署、生产 IAM、真实用户/业务数据、真实外部服务、800+ 日任务量、Milvus/PostgreSQL/Redis 集群、GUI、设备路径或用户验收。依赖安装、模型下载和服务/API 验证需在明确的冻结环境中单独完成。
 
 ## 许可证
 

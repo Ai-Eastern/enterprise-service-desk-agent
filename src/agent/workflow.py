@@ -5,7 +5,12 @@ from __future__ import annotations
 import re
 from dataclasses import asdict
 from pathlib import Path
-from typing import NotRequired, TypedDict
+from typing import TypedDict
+
+try:
+    from typing import NotRequired
+except ImportError:  # Python 3.10 compatibility.
+    from typing_extensions import NotRequired
 
 from src.config import PROJECT_PATHS
 
@@ -169,9 +174,11 @@ def _answer_node(state: WorkflowState) -> dict[str, object]:
             answer = f"工单 {ticket_id} 已{'复用' if reused else '创建'}。"
         else:
             answer = str(state["tool_result"]["status_message"])
-    else:
+    elif state.get("retrievals"):
         first = state["retrievals"][0]
         answer = f"根据《{first['title']}》：{str(first['text'])[:160]}"
+    else:
+        answer = "未检索到可用知识。"
     if citations:
         references = "、".join(
             f"[{citation['doc_id']}]({citation['source_file']})" for citation in citations
