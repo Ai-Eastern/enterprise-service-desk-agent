@@ -35,6 +35,8 @@ class TriageAgent:
     @staticmethod
     def route(query: str) -> str:
         normalized = query.strip()
+        if normalized.startswith(("请说明", "请结合")):
+            return "knowledge"
         if any(marker in normalized for marker in ("创建工单", "提交工单", "报修")):
             return "ticket"
         if any(marker in normalized for marker in ("服务状态", "故障", "异常", "不可用")):

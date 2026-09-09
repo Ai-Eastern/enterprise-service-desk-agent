@@ -1,0 +1,1103 @@
+{
+  "suite": "service-desk-contract-v1",
+  "status": "PASS",
+  "compound_dataset_sha256": "a359a203235c2ff66841ff7bce5cbe150b5c798e93c7bf5179d953caede1d6ca",
+  "fault_dataset_sha256": "93563a7d24fb2581aa9efbec2b227ff8383e033e7cac9ab46a39b2af5b1fb00c",
+  "compound": {
+    "total": 100,
+    "passed": 100,
+    "failed": 0,
+    "failed_ids": [],
+    "details": [
+      {
+        "query_id": "project-knowledge-001",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-002",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-003",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-004",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-005",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-006",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-007",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-008",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-009",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-010",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-011",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-012",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-013",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-014",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-015",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-016",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-017",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-018",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-019",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-020",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-021",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-022",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-023",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-024",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-025",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-026",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-027",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-028",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-029",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-030",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-031",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-032",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-033",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-034",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-035",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-036",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-037",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-038",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-039",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-knowledge-040",
+        "status": "PASS",
+        "route": "knowledge",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-001",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-002",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-003",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-004",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-005",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-006",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-007",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-008",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-009",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-010",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-011",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-012",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-013",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-014",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-015",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-016",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-017",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-018",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-019",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-020",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-021",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-022",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-023",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-024",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-025",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-026",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-027",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-028",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-029",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-status-030",
+        "status": "PASS",
+        "route": "diagnostic",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-01",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-02",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-03",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-04",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-05",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-06",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-07",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-08",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-09",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-10",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-11",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-12",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-13",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-14",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-15",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-16",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-17",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-18",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-19",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-allowed-20",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-01",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-02",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-03",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-04",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-05",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-06",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-07",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-08",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-09",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      },
+      {
+        "query_id": "project-ticket-denied-10",
+        "status": "PASS",
+        "route": "ticket",
+        "schema_valid": true,
+        "citation_correct": true,
+        "approval_correct": true,
+        "permission_correct": true
+      }
+    ]
+  },
+  "faults": {
+    "total": 30,
+    "passed": 30,
+    "failed": 0,
+    "failed_ids": [],
+    "details": [
+      {
+        "fault_id": "fault-unknown_identity-01",
+        "category": "unknown_identity",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-unknown_identity-02",
+        "category": "unknown_identity",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-unknown_identity-03",
+        "category": "unknown_identity",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-unknown_identity-04",
+        "category": "unknown_identity",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-unknown_identity-05",
+        "category": "unknown_identity",
+        "variant": 5,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-diagnostic_timeout-01",
+        "category": "diagnostic_timeout",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-diagnostic_timeout-02",
+        "category": "diagnostic_timeout",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-diagnostic_timeout-03",
+        "category": "diagnostic_timeout",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-diagnostic_timeout-04",
+        "category": "diagnostic_timeout",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-diagnostic_timeout-05",
+        "category": "diagnostic_timeout",
+        "variant": 5,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-permission_denied-01",
+        "category": "permission_denied",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-permission_denied-02",
+        "category": "permission_denied",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-permission_denied-03",
+        "category": "permission_denied",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-permission_denied-04",
+        "category": "permission_denied",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-permission_denied-05",
+        "category": "permission_denied",
+        "variant": 5,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-interrupt_recovery-01",
+        "category": "interrupt_recovery",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-interrupt_recovery-02",
+        "category": "interrupt_recovery",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-interrupt_recovery-03",
+        "category": "interrupt_recovery",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-interrupt_recovery-04",
+        "category": "interrupt_recovery",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-interrupt_recovery-05",
+        "category": "interrupt_recovery",
+        "variant": 5,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-duplicate_execution-01",
+        "category": "duplicate_execution",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-duplicate_execution-02",
+        "category": "duplicate_execution",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-duplicate_execution-03",
+        "category": "duplicate_execution",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-duplicate_execution-04",
+        "category": "duplicate_execution",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-duplicate_execution-05",
+        "category": "duplicate_execution",
+        "variant": 5,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-human_rejection-01",
+        "category": "human_rejection",
+        "variant": 1,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-human_rejection-02",
+        "category": "human_rejection",
+        "variant": 2,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-human_rejection-03",
+        "category": "human_rejection",
+        "variant": 3,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-human_rejection-04",
+        "category": "human_rejection",
+        "variant": 4,
+        "status": "PASS"
+      },
+      {
+        "fault_id": "fault-human_rejection-05",
+        "category": "human_rejection",
+        "variant": 5,
+        "status": "PASS"
+      }
+    ]
+  },
+  "boundary": "Deterministic local contract evidence only: routing, request schema, citation mapping, approval gates and injected failure handling. It does not prove semantic retrieval quality, real service integration, production IAM, capacity, external MCP/A2A interoperability or user acceptance."
+}

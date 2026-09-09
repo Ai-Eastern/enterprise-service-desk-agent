@@ -1,0 +1,152 @@
+[
+  {
+    "fault_id": "fault-unknown_identity-01",
+    "category": "unknown_identity",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-unknown_identity-02",
+    "category": "unknown_identity",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-unknown_identity-03",
+    "category": "unknown_identity",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-unknown_identity-04",
+    "category": "unknown_identity",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-unknown_identity-05",
+    "category": "unknown_identity",
+    "variant": 5
+  },
+  {
+    "fault_id": "fault-diagnostic_timeout-01",
+    "category": "diagnostic_timeout",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-diagnostic_timeout-02",
+    "category": "diagnostic_timeout",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-diagnostic_timeout-03",
+    "category": "diagnostic_timeout",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-diagnostic_timeout-04",
+    "category": "diagnostic_timeout",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-diagnostic_timeout-05",
+    "category": "diagnostic_timeout",
+    "variant": 5
+  },
+  {
+    "fault_id": "fault-permission_denied-01",
+    "category": "permission_denied",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-permission_denied-02",
+    "category": "permission_denied",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-permission_denied-03",
+    "category": "permission_denied",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-permission_denied-04",
+    "category": "permission_denied",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-permission_denied-05",
+    "category": "permission_denied",
+    "variant": 5
+  },
+  {
+    "fault_id": "fault-interrupt_recovery-01",
+    "category": "interrupt_recovery",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-interrupt_recovery-02",
+    "category": "interrupt_recovery",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-interrupt_recovery-03",
+    "category": "interrupt_recovery",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-interrupt_recovery-04",
+    "category": "interrupt_recovery",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-interrupt_recovery-05",
+    "category": "interrupt_recovery",
+    "variant": 5
+  },
+  {
+    "fault_id": "fault-duplicate_execution-01",
+    "category": "duplicate_execution",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-duplicate_execution-02",
+    "category": "duplicate_execution",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-duplicate_execution-03",
+    "category": "duplicate_execution",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-duplicate_execution-04",
+    "category": "duplicate_execution",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-duplicate_execution-05",
+    "category": "duplicate_execution",
+    "variant": 5
+  },
+  {
+    "fault_id": "fault-human_rejection-01",
+    "category": "human_rejection",
+    "variant": 1
+  },
+  {
+    "fault_id": "fault-human_rejection-02",
+    "category": "human_rejection",
+    "variant": 2
+  },
+  {
+    "fault_id": "fault-human_rejection-03",
+    "category": "human_rejection",
+    "variant": 3
+  },
+  {
+    "fault_id": "fault-human_rejection-04",
+    "category": "human_rejection",
+    "variant": 4
+  },
+  {
+    "fault_id": "fault-human_rejection-05",
+    "category": "human_rejection",
+    "variant": 5
+  }
+]

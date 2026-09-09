@@ -223,6 +223,7 @@ def _evaluation_cases() -> tuple[EvaluationCase, ...]:
         Visibility.SUPPORT: "support",
         Visibility.ADMIN: "admin",
     }
+    ordered_documents = tuple(sorted(DOCUMENTS, key=lambda item: item.doc_id))
     knowledge = tuple(
         EvaluationCase(
             f"project-knowledge-{index:03d}",
@@ -232,7 +233,18 @@ def _evaluation_cases() -> tuple[EvaluationCase, ...]:
             EvalTool.NONE,
             PermissionResult.ALLOWED,
         )
-        for index, document in enumerate(sorted(DOCUMENTS, key=lambda item: item.doc_id), 1)
+        for index, document in enumerate(ordered_documents, 1)
+    )
+    knowledge_variants = tuple(
+        EvaluationCase(
+            f"project-knowledge-{index:03d}",
+            f"请结合{document.title}给出关键处理要点。",
+            role_for_visibility[document.visibility],
+            (document.doc_id,),
+            EvalTool.NONE,
+            PermissionResult.ALLOWED,
+        )
+        for index, document in enumerate(ordered_documents[:16], 25)
     )
     statuses = tuple(
         EvaluationCase(
@@ -243,18 +255,18 @@ def _evaluation_cases() -> tuple[EvaluationCase, ...]:
             EvalTool.GET_SERVICE_STATUS,
             PermissionResult.ALLOWED,
         )
-        for index, product in enumerate(PRODUCTS * 4, 1)
+        for index, product in enumerate(PRODUCTS * 10, 1)
     )
     allowed_tickets = tuple(
         EvaluationCase(
             f"project-ticket-allowed-{index:02d}",
-            f"请为{product.name}记录一条虚构工单。",
-            "support" if index <= 8 else "admin",
+            f"请为{product.name}创建工单，记录一条虚构事件。",
+            "support" if index <= 10 else "admin",
             (),
             EvalTool.CREATE_TICKET,
             PermissionResult.ALLOWED,
         )
-        for index, product in enumerate((PRODUCTS * 6)[:16], 1)
+        for index, product in enumerate((PRODUCTS * 7)[:20], 1)
     )
     denied_tickets = tuple(
         EvaluationCase(
@@ -265,9 +277,9 @@ def _evaluation_cases() -> tuple[EvaluationCase, ...]:
             EvalTool.CREATE_TICKET,
             PermissionResult.DENIED,
         )
-        for index, product in enumerate((PRODUCTS * 3)[:8], 1)
+        for index, product in enumerate((PRODUCTS * 4)[:10], 1)
     )
-    return knowledge + statuses + allowed_tickets + denied_tickets
+    return knowledge + knowledge_variants + statuses + allowed_tickets + denied_tickets
 
 
 EVALUATION_CASES = _evaluation_cases()

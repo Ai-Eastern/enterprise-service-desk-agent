@@ -71,6 +71,8 @@ def _retrieve_node(state: WorkflowState) -> dict[str, object]:
 
 
 def _decide_tool_node(state: WorkflowState) -> dict[str, object]:
+    if state["query"].strip().startswith(("请说明", "请结合")):
+        return {"tool_name": "", "tool_args": {}}
     if "创建工单" in state["query"]:
         tool_args = CreateTicketInput.model_validate(
             {

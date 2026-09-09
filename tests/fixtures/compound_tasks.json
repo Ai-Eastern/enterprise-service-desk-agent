@@ -1,0 +1,882 @@
+[
+  {
+    "query_id": "project-knowledge-001",
+    "question": "请说明智达科技账户常见问题中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "account-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-002",
+    "question": "请说明智达科技管理员审计资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-audit"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-003",
+    "question": "请说明智达科技管理员备份资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-backup"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-004",
+    "question": "请说明智达科技管理员资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-operations"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-005",
+    "question": "请说明智达科技管理员发布资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-release"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-006",
+    "question": "请说明智达科技管理员保留资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-retention"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-007",
+    "question": "请说明智达科技管理员用户资料中的演示规则。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-users"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-008",
+    "question": "请说明智达科技知识中心常见问题中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "common-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-009",
+    "question": "请说明智达科技知识中心检索说明中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "knowledge-hub-search"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-010",
+    "question": "请说明智达科技智能助手产品手册中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "product-manual"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-011",
+    "question": "请说明智达科技安全使用常见问题中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "safety-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-012",
+    "question": "请说明智达科技服务控制台概览中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "service-console-overview"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-013",
+    "question": "请说明智达科技演示服务条款中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "service-terms"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-014",
+    "question": "请说明智达科技智能助手配置手册中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "smart-assist-setup"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-015",
+    "question": "请说明智达科技服务状态常见问题中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "status-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-016",
+    "question": "请说明智达科技服务方案常见问题中的演示规则。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "subscription-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-017",
+    "question": "请说明智达科技客服访问资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-access"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-018",
+    "question": "请说明智达科技客服方案资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-billing"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-019",
+    "question": "请说明智达科技客服诊断资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-diagnostics"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-020",
+    "question": "请说明智达科技客服升级资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-escalation"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-021",
+    "question": "请说明智达科技客服事件资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-incident"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-022",
+    "question": "请说明智达科技内部客服资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-playbook"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-023",
+    "question": "请说明智达科技客服分流资料中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "support-routing"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-024",
+    "question": "请说明智达科技知识中心故障处理中的演示规则。",
+    "role": "support",
+    "expected_doc_ids": [
+      "troubleshooting-guide"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-025",
+    "question": "请结合智达科技账户常见问题给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "account-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-026",
+    "question": "请结合智达科技管理员审计资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-audit"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-027",
+    "question": "请结合智达科技管理员备份资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-backup"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-028",
+    "question": "请结合智达科技管理员资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-operations"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-029",
+    "question": "请结合智达科技管理员发布资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-release"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-030",
+    "question": "请结合智达科技管理员保留资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-retention"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-031",
+    "question": "请结合智达科技管理员用户资料给出关键处理要点。",
+    "role": "admin",
+    "expected_doc_ids": [
+      "admin-users"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-032",
+    "question": "请结合智达科技知识中心常见问题给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "common-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-033",
+    "question": "请结合智达科技知识中心检索说明给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "knowledge-hub-search"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-034",
+    "question": "请结合智达科技智能助手产品手册给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "product-manual"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-035",
+    "question": "请结合智达科技安全使用常见问题给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "safety-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-036",
+    "question": "请结合智达科技服务控制台概览给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "service-console-overview"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-037",
+    "question": "请结合智达科技演示服务条款给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "service-terms"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-038",
+    "question": "请结合智达科技智能助手配置手册给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "smart-assist-setup"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-039",
+    "question": "请结合智达科技服务状态常见问题给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "status-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-knowledge-040",
+    "question": "请结合智达科技服务方案常见问题给出关键处理要点。",
+    "role": "readonly",
+    "expected_doc_ids": [
+      "subscription-faq"
+    ],
+    "expected_tool": "none",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-001",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-002",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-003",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-004",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-005",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-006",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-007",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-008",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-009",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-010",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-011",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-012",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-013",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-014",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-015",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-016",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-017",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-018",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-019",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-020",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-021",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-022",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-023",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-024",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-025",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-026",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-027",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-028",
+    "question": "请查询智达科技智能助手（虚构演示产品）的演示服务状态。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-029",
+    "question": "请查询智达科技知识中心（虚构演示产品）的演示服务状态。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-status-030",
+    "question": "请查询智达科技服务控制台（虚构演示产品）的演示服务状态。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "get_service_status",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-01",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-02",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-03",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-04",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-05",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-06",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-07",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-08",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-09",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-10",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "support",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-11",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-12",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-13",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-14",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-15",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-16",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-17",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-18",
+    "question": "请为智达科技服务控制台（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-19",
+    "question": "请为智达科技智能助手（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-allowed-20",
+    "question": "请为智达科技知识中心（虚构演示产品）创建工单，记录一条虚构事件。",
+    "role": "admin",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "allowed"
+  },
+  {
+    "query_id": "project-ticket-denied-01",
+    "question": "readonly 身份尝试为智达科技智能助手（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-02",
+    "question": "readonly 身份尝试为智达科技知识中心（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-03",
+    "question": "readonly 身份尝试为智达科技服务控制台（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-04",
+    "question": "readonly 身份尝试为智达科技智能助手（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-05",
+    "question": "readonly 身份尝试为智达科技知识中心（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-06",
+    "question": "readonly 身份尝试为智达科技服务控制台（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-07",
+    "question": "readonly 身份尝试为智达科技智能助手（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-08",
+    "question": "readonly 身份尝试为智达科技知识中心（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-09",
+    "question": "readonly 身份尝试为智达科技服务控制台（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  },
+  {
+    "query_id": "project-ticket-denied-10",
+    "question": "readonly 身份尝试为智达科技智能助手（虚构演示产品）创建工单。",
+    "role": "readonly",
+    "expected_doc_ids": [],
+    "expected_tool": "create_ticket",
+    "expected_permission_result": "denied"
+  }
+]

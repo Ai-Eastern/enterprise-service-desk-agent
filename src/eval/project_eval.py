@@ -22,9 +22,9 @@ from src.eval.chroma_snapshot import copy_snapshot, file_manifest
 
 PROJECT_EVAL_PATH = PROJECT_ROOT / "data" / "eval" / "project_eval.json"
 PROJECT_EVAL_ROOT = PROJECT_PATHS["runtime"] / "eval" / "project"
-EXPECTED_CASE_COUNT = 60
-EXPECTED_KNOWLEDGE_COUNT = 24
-EXPECTED_TOOL_COUNT = 36
+EXPECTED_CASE_COUNT = 100
+EXPECTED_KNOWLEDGE_COUNT = 40
+EXPECTED_TOOL_COUNT = 60
 
 
 def _sha256(path: Path) -> str:
@@ -70,7 +70,7 @@ def load_project_cases(path: Path = PROJECT_EVAL_PATH) -> tuple[EvaluationCase, 
 
 def validate_project_cases(cases: Sequence[EvaluationCase]) -> None:
     if len(cases) != EXPECTED_CASE_COUNT:
-        raise ValueError("项目评测必须包含 60 条用例。")
+        raise ValueError("项目评测必须包含 100 条用例。")
     ids = [case.query_id for case in cases]
     if len(ids) != len(set(ids)):
         raise ValueError("项目评测 query_id 不得重复。")
@@ -175,7 +175,7 @@ def build_project_report(
         "tool_selection_failed_query_ids": [case.query_id for case in cases if not tool_scores[case.query_id]["tool_correct"]],
         "permission_failed_query_ids": [case.query_id for case in cases if not tool_scores[case.query_id]["permission_correct"]],
         "tool_schema_failed_query_ids": [case.query_id for case in tool_cases if not tool_scores[case.query_id]["schema_valid"]],
-        "boundary": "Knowledge Hit@5/MRR denominator is 24 knowledge cases; tool and permission metrics use all 60; schema metrics use 36 tool cases. No create_ticket or human approval is executed.",
+        "boundary": "Knowledge Hit@5/MRR denominator is 40 knowledge cases; tool and permission metrics use all 100; schema metrics use 60 tool cases. No create_ticket or human approval is executed.",
     }
 
 
@@ -249,7 +249,7 @@ def run_project_evaluation(
     )
     report["run_id"] = run_id
     report["normal_chroma_unchanged"] = normal_unchanged
-    report["boundary"] = "Knowledge Hit@5/MRR denominator is 24 knowledge cases; tool and permission metrics use all 60; schema metrics use 36 tool cases. Normal Chroma is copied to a run-isolated snapshot; no create_ticket or human approval is executed."
+    report["boundary"] = "Knowledge Hit@5/MRR denominator is 40 knowledge cases; tool and permission metrics use all 100; schema metrics use 60 tool cases. Normal Chroma is copied to a run-isolated snapshot; no create_ticket or human approval is executed."
     report_path = run_dir / "report.json"
     _write_json(report_path, report)
     return report
