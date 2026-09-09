@@ -173,6 +173,13 @@ def _require_cosine_collection(collection: object) -> None:
         raise ValueError("Chroma collection 必须使用 cosine 距离空间，请更换空的运行目录后重新入库。")
 
 
+def _stop_client(client) -> None:
+    try:
+        client._system.stop()
+    finally:
+        client.clear_system_cache()
+
+
 def ingest(
     knowledge_dir: Path = PROJECT_PATHS["data"] / "knowledge",
     chroma_path: Path = CHROMA_PATH,
@@ -188,19 +195,22 @@ def ingest(
     chroma_path = chroma_path.resolve()
     chroma_path.mkdir(parents=True, exist_ok=True)
     client = chromadb.PersistentClient(path=str(chroma_path))
-    collection = client.get_or_create_collection(
-        name=COLLECTION_NAME,
-        metadata={"hnsw:space": "cosine"},
-        embedding_function=None,
-    )
-    _require_cosine_collection(collection)
-    collection.upsert(
-        ids=[chunk.chunk_id for chunk in chunks],
-        documents=[chunk.text for chunk in chunks],
-        metadatas=[chunk.metadata for chunk in chunks],
-        embeddings=_embed([chunk.text for chunk in chunks]),
-    )
-    chunk_count = collection.count()
+    try:
+        collection = client.get_or_create_collection(
+            name=COLLECTION_NAME,
+            metadata={"hnsw:space": "cosine"},
+            embedding_function=None,
+        )
+        _require_cosine_collection(collection)
+        collection.upsert(
+            ids=[chunk.chunk_id for chunk in chunks],
+            documents=[chunk.text for chunk in chunks],
+            metadatas=[chunk.metadata for chunk in chunks],
+            embeddings=_embed([chunk.text for chunk in chunks]),
+        )
+        chunk_count = collection.count()
+    finally:
+        _stop_client(client)
     return {
         "collection": COLLECTION_NAME,
         "model_revision": MODEL_REVISION,
@@ -234,38 +244,41 @@ def search(
     where = {"visibility": {"$in": list(allowed)}}
 
     client = chromadb.PersistentClient(path=str(chroma_path.resolve()))
-    collection = client.get_collection(name=COLLECTION_NAME, embedding_function=None)
-    _require_cosine_collection(collection)
-    response = collection.query(
-        query_embeddings=_embed([QUERY_INSTRUCTION + cleaned_query]),
-        n_results=top_k,
-        where=where,
-        include=["documents", "metadatas", "distances"],
-    )
-    ids = response["ids"][0]
-    documents = response["documents"][0]
-    metadatas = response["metadatas"][0]
-    distances = response["distances"][0]
-
-    results: list[SearchResult] = []
-    for rank, (chunk_id, text, metadata, distance) in enumerate(
-        zip(ids, documents, metadatas, distances, strict=True), start=1
-    ):
-        visibility = str(metadata["visibility"])
-        if visibility not in allowed:
-            raise AssertionError("Chroma 返回了权限过滤范围之外的结果。")
-        results.append(
-            SearchResult(
-                rank=rank,
-                chunk_id=chunk_id,
-                doc_id=str(metadata["doc_id"]),
-                title=str(metadata["title"]),
-                category=str(metadata["category"]),
-                visibility=visibility,
-                product_id=str(metadata["product_id"]),
-                source_file=str(metadata["source_file"]),
-                score=1.0 - float(distance),
-                text=text,
-            )
+    try:
+        collection = client.get_collection(name=COLLECTION_NAME, embedding_function=None)
+        _require_cosine_collection(collection)
+        response = collection.query(
+            query_embeddings=_embed([QUERY_INSTRUCTION + cleaned_query]),
+            n_results=top_k,
+            where=where,
+            include=["documents", "metadatas", "distances"],
         )
+        ids = response["ids"][0]
+        documents = response["documents"][0]
+        metadatas = response["metadatas"][0]
+        distances = response["distances"][0]
+
+        results: list[SearchResult] = []
+        for rank, (chunk_id, text, metadata, distance) in enumerate(
+            zip(ids, documents, metadatas, distances, strict=True), start=1
+        ):
+            visibility = str(metadata["visibility"])
+            if visibility not in allowed:
+                raise AssertionError("Chroma 返回了权限过滤范围之外的结果。")
+            results.append(
+                SearchResult(
+                    rank=rank,
+                    chunk_id=chunk_id,
+                    doc_id=str(metadata["doc_id"]),
+                    title=str(metadata["title"]),
+                    category=str(metadata["category"]),
+                    visibility=visibility,
+                    product_id=str(metadata["product_id"]),
+                    source_file=str(metadata["source_file"]),
+                    score=1.0 - float(distance),
+                    text=text,
+                )
+            )
+    finally:
+        _stop_client(client)
     return tuple(results)

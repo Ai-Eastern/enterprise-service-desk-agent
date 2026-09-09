@@ -104,7 +104,7 @@ def _permission_node(state: WorkflowState) -> dict[str, str]:
 
 
 def _review_node(state: WorkflowState) -> dict[str, bool]:
-    approved = interrupt(
+    decision = interrupt(
         {
             "action": state["tool_name"],
             "user_id": state["user_id"],
@@ -117,7 +117,7 @@ def _review_node(state: WorkflowState) -> dict[str, bool]:
             "message": "创建工单会写入本地数据库，是否批准？",
         }
     )
-    return {"review_approved": bool(approved)}
+    return {"review_approved": decision == "approve"}
 
 
 def _after_permission(state: WorkflowState) -> str:
@@ -195,7 +195,7 @@ def _compile(checkpointer: SqliteSaver):
     builder.add_node("permission", _permission_node)
     builder.add_node("review", _review_node)
     builder.add_node("execute_tool", _execute_tool_node)
-    builder.add_node("answer", _answer_node)
+    builder.add_node("compose_answer", _answer_node)
     builder.add_edge(START, "context")
     builder.add_edge("context", "retrieve")
     builder.add_edge("retrieve", "decide_tool")
@@ -203,13 +203,13 @@ def _compile(checkpointer: SqliteSaver):
     builder.add_conditional_edges(
         "permission",
         _after_permission,
-        {"review": "review", "execute_tool": "execute_tool", "answer": "answer"},
+        {"review": "review", "execute_tool": "execute_tool", "answer": "compose_answer"},
     )
     builder.add_conditional_edges(
-        "review", _after_review, {"execute_tool": "execute_tool", "answer": "answer"}
+        "review", _after_review, {"execute_tool": "execute_tool", "answer": "compose_answer"}
     )
-    builder.add_edge("execute_tool", "answer")
-    builder.add_edge("answer", END)
+    builder.add_edge("execute_tool", "compose_answer")
+    builder.add_edge("compose_answer", END)
     return builder.compile(checkpointer=checkpointer)
 
 
@@ -240,6 +240,14 @@ def _public_result(result: dict[str, object], thread_id: str) -> dict[str, objec
     return payload
 
 
+def _invoke(graph, input_value: object, config: dict[str, dict[str, str]]) -> dict[str, object]:
+    result = graph.invoke(input_value, config)
+    snapshot = graph.get_state(config)
+    if snapshot.next:
+        result["__interrupt__"] = snapshot.tasks[0].interrupts
+    return result
+
+
 def start_workflow(
     *,
     thread_id: str,
@@ -266,7 +274,7 @@ def start_workflow(
         "chroma_path": str(chroma_path),
     }
     with SqliteSaver.from_conn_string(str(checkpoint_path)) as checkpointer:
-        result = _compile(checkpointer).invoke(state, config)
+        result = _invoke(_compile(checkpointer), state, config)
     return _public_result(result, thread_id)
 
 
@@ -284,5 +292,9 @@ def resume_workflow(
     if not checkpoint_path.is_file():
         raise ValueError("未找到可恢复的检查点数据库。")
     with SqliteSaver.from_conn_string(str(checkpoint_path)) as checkpointer:
-        result = _compile(checkpointer).invoke(Command(resume=approved), config)
+        result = _invoke(
+            _compile(checkpointer),
+            Command(resume="approve" if approved else "reject"),
+            config,
+        )
     return _public_result(result, thread_id)

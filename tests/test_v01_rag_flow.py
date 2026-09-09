@@ -6,6 +6,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from chromadb.api.client import SharedSystemClient
+
 from src.data_schema import Visibility
 from src.retrieval import chroma_store
 from src.retrieval.chroma_store import SearchResult
@@ -66,6 +68,7 @@ class V01RagFlowTest(unittest.TestCase):
                     top_k=3,
                     chroma_path=chroma_path,
                 )
+                self.assertFalse(SharedSystemClient._identifier_to_system)
 
             self.assertEqual(report["document_count"], 3)
             self.assertTrue(results)
