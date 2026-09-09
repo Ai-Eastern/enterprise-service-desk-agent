@@ -184,7 +184,7 @@ foreach ($tool in $bootstrapTools) {
     }
     $toolArchives += $archive
 }
-& $venvPython -m pip install --isolated --no-index --no-deps @toolArchives
+& $venvPython -m pip install --isolated --cache-dir $env:PIP_CACHE_DIR --no-index --no-deps @toolArchives
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap '构建工具安装失败。'
 }
@@ -199,13 +199,13 @@ Invoke-WebRequest -Uri $pypikaUrl -OutFile $pypikaArchive
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $pypikaArchive).Hash -ne $pypikaSha256) {
     Stop-Bootstrap 'pypika sdist SHA256 校验失败。'
 }
-& $venvPython -m pip install --isolated --no-index --no-deps --no-build-isolation $pypikaArchive
+& $venvPython -m pip install --isolated --cache-dir $env:PIP_CACHE_DIR --no-index --no-deps --no-build-isolation $pypikaArchive
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap 'pypika sdist 安装失败。'
 }
 
 Write-Host '正在将锁定 wheel 依赖安装到项目 .venv。'
-& $venvPython -m pip install --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: --require-hashes --requirement (Join-Path $ProjectRoot 'requirements.txt')
+& $venvPython -m pip install --isolated --cache-dir $env:PIP_CACHE_DIR --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: --require-hashes --requirement (Join-Path $ProjectRoot 'requirements.txt')
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap '锁定 wheel 依赖安装失败。'
 }
