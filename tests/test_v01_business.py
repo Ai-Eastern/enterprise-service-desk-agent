@@ -4,6 +4,7 @@ import csv
 import sqlite3
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 
 from scripts.generate_demo_data import generate
@@ -93,7 +94,7 @@ class V01BusinessTest(unittest.TestCase):
         self.assertFalse(first["reused"])
         self.assertTrue(second["reused"])
         self.assertEqual(first["ticket_id"], second["ticket_id"])
-        with sqlite3.connect(self.db_path) as connection:
+        with closing(sqlite3.connect(self.db_path)) as connection:
             rows = connection.execute(
                 "SELECT actor_user_id, actor_role, action, outcome, resource_type, "
                 "resource_id, product_id, idempotency_key FROM audit_events ORDER BY rowid"
@@ -129,7 +130,7 @@ class V01BusinessTest(unittest.TestCase):
                         products_path=self.products_path,
                     )
                 self.assertEqual(raised.exception.code, ToolErrorCode.IDEMPOTENCY_CONFLICT)
-        with sqlite3.connect(self.db_path) as connection:
+        with closing(sqlite3.connect(self.db_path)) as connection:
             count = connection.execute("SELECT COUNT(*) FROM tickets").fetchone()[0]
             outcomes = connection.execute(
                 "SELECT outcome FROM audit_events ORDER BY rowid"
