@@ -6,10 +6,6 @@ import json
 from dataclasses import dataclass
 from typing import Iterable
 
-import psycopg
-import redis
-from pymilvus import MilvusClient
-
 from src.data_schema import Visibility
 
 
@@ -35,6 +31,8 @@ class MilvusKnowledgeRepository:
         allowed_visibilities: Iterable[Visibility | str],
         limit: int = 5,
     ) -> list[dict[str, object]]:
+        from pymilvus import MilvusClient
+
         client = MilvusClient(uri=self.uri, token=self.token)
         return client.search(
             collection_name=self.collection_name,
@@ -51,6 +49,8 @@ class PostgresIdempotencyRepository:
 
     def reserve(self, idempotency_key: str, ticket_id: str) -> str:
         """Insert once and return the original ticket ID on retries."""
+
+        import psycopg
 
         statement = """
             INSERT INTO ticket_idempotency (idempotency_key, ticket_id)
@@ -74,10 +74,14 @@ class RedisTaskStateRepository:
     ttl_seconds: int = 3600
 
     def save(self, task_id: str, payload: dict[str, object]) -> None:
+        import redis
+
         client = redis.Redis.from_url(self.url, decode_responses=True)
         client.setex(f"service-desk:task:{task_id}", self.ttl_seconds, json.dumps(payload))
 
     def load(self, task_id: str) -> dict[str, object] | None:
+        import redis
+
         client = redis.Redis.from_url(self.url, decode_responses=True)
         payload = client.get(f"service-desk:task:{task_id}")
         return None if payload is None else json.loads(payload)

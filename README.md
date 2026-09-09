@@ -1,5 +1,7 @@
 # Enterprise Service Desk Agent
 
+[![contract-tests](https://github.com/Ai-Eastern/enterprise-service-desk-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Ai-Eastern/enterprise-service-desk-agent/actions/workflows/ci.yml)
+
 一个面向政企内部服务台的 Agent 工程演进项目：从 RAG 单 Agent 底座，逐步演进到 MCP 工具接入、A2A 跨 Agent 验证和多 Agent 协作。
 
 它不是单纯的工单审批系统。系统先理解问题并分流：知识类问题检索后回答，状态类问题交给诊断 Agent，只有确实需要写入工单时才触发权限校验、人工审批和幂等写入。
@@ -7,6 +9,8 @@
 > 当前标签：**v1.0.0-multi-agent**
 > 履历对应阶段：2026
 > Git 说明：四个阶段均在当前日期重新整理为真实提交和标签，没有伪造历史提交日期。
+
+GitHub Releases 保留四个阶段标签；后续修正使用普通补丁版本，不改写已发布标签。
 
 ## 最终版本实现了什么
 
