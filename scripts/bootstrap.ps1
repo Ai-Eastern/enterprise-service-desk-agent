@@ -8,6 +8,7 @@ $Utf8 = New-Object System.Text.UTF8Encoding($false)
 [Console]::OutputEncoding = $Utf8
 $OutputEncoding = $Utf8
 $ProjectRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+$env:PYTHONDONTWRITEBYTECODE = '1'
 
 function Stop-Bootstrap {
     param([string]$Message)
@@ -71,7 +72,7 @@ else {
                 $provenance.package_sha512 -eq '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950' -and
                 $provenance.python_version -eq '3.10.11' -and $provenance.architecture -eq 'x64' -and
                 [int]$provenance.file_count -eq $content.file_count -and $provenance.content_manifest_sha256 -eq $content.content_manifest_sha256 -and
-                $content.file_count -eq 1965 -and $content.content_manifest_sha256 -eq 'A36ACE6695719F55BB070922E1B00BD0FA1869D79C9139CF9DB92378B228EF4E' -and
+                $content.file_count -eq 1712 -and $content.content_manifest_sha256 -eq '755F21CBA88F4C0C4AE12E791732B82F67B6D1EEA9F8A0481BE30DCE0F32AA8C' -and
                 (Test-Python31011X64 -Executable $projectPython)
         }
         catch {
@@ -103,7 +104,7 @@ else {
             Stop-Bootstrap 'Python runtime ensurepip 验证失败。'
         }
         $content = Get-RuntimeContentManifest -Root $stagingRoot
-        if ($content.file_count -ne 1965 -or $content.content_manifest_sha256 -ne 'A36ACE6695719F55BB070922E1B00BD0FA1869D79C9139CF9DB92378B228EF4E') {
+        if ($content.file_count -ne 1712 -or $content.content_manifest_sha256 -ne '755F21CBA88F4C0C4AE12E791732B82F67B6D1EEA9F8A0481BE30DCE0F32AA8C') {
             Stop-Bootstrap 'Python runtime content manifest 校验失败。'
         }
         $provenanceJson = [ordered]@{
