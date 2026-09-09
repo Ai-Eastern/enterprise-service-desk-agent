@@ -1,0 +1,41 @@
+# Project-local tooling and environments
+/.tooling/
+/.venv/
+/.cache/
+/.tmp/
+
+# Runtime and generated artifacts
+/runtime/
+/artifacts/
+/reports/
+/outputs/
+/logs/
+/data/
+
+# Keep source-controlled tests and docs visible; ignore only generated content.
+/tests/__pycache__/
+/docs/_build/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Local databases and generated datasets
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*evaluation*.json
+*eval*.json
+*评测*.json
+
+# Secrets, screenshots, and logs
+.env
+.env.*
+*.log
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
