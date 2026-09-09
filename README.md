@@ -6,7 +6,7 @@
 
 它不是单纯的工单审批系统。系统先理解问题并分流：知识类问题检索后回答，状态类问题交给诊断 Agent，只有确实需要写入工单时才触发权限校验、人工审批和幂等写入。
 
-> 当前发布：**v1.2.0-integration**（v1.0 多 Agent 能力的本地中间件联调与容量基线）
+> 当前发布：**v1.3.0-semantic-eval**（真实 Chroma 语义检索评测与既有工程证据）
 > 履历对应阶段：2026
 > Git 说明：四个阶段均在当前日期重新整理为真实提交和标签，没有伪造历史提交日期。
 
@@ -33,6 +33,7 @@ GitHub Releases 保留四个阶段标签；后续修正使用普通补丁版本�
 | v1.0.0-multi-agent | 2026 | 五类 Agent 协作、FastAPI、追踪、生产中间件适配边界 | 未接真实政企业务系统或生产集群 |
 | v1.1.0-evidence | 2026 | 100 条复合任务合同集、30 条故障注入集和机器可读报告 | 不等同于生产数据、容量或用户验收 |
 | v1.2.0-integration | 2026 | PostgreSQL/Redis/Milvus 本地容器联调；1,000 条并发 ASGI 容量基线 | 不等同于生产拓扑、外部系统或生产压测 |
+| v1.3.0-semantic-eval | 2026 | 固定 BGE revision、真实 Chroma 检索与快照隔离评测 | 不等同于真实企业语料或 Milvus 语义迁移 |
 
 当前 v1.0 使用 2026 可安装的维护线 mcp==2.2.0 与 a2a-sdk==1.1.2；历史标签保留当时可用的 SDK pin。详见 [版本演进说明](docs/版本演进.md)。
 
@@ -87,6 +88,17 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
 当前固定证据为 **100/100 条复合任务合同通过、30/30 条故障注入合同通过**。复合任务覆盖知识/状态/建单分流、请求 Schema、引用映射、权限和人工审批门禁；故障集覆盖未知身份、只读身份越权、诊断超时、中断恢复、重复执行和人工拒绝。机器可读结果见 [contract-report.json](docs/evidence/contract-report.json)。
 
 这组结果是本地确定性合同证据，不是语义检索质量、真实政企业务联调、生产 IAM、容量压测或用户验收。完整 RAG 检索评测仍由 `src/eval/project_eval.py` 独立执行，避免把桩函数结果包装成真实检索成绩。
+
+真实 Chroma 语义检索评测：
+
+~~~powershell
+.\.venv\Scripts\python.exe scripts/generate_demo_data.py
+.\.venv\Scripts\python.exe scripts/ingest.py
+.\.venv\Scripts\python.exe scripts/run_eval.py --suite project
+.\.venv\Scripts\python.exe scripts/run_eval.py --suite workflow
+~~~
+
+当前固定 BGE revision 的新鲜结果为：40 条知识检索命中 39 条，**Hit@5=0.975、MRR=0.85**；100/100 条工具选择与权限判断正确，60/60 条工具 Schema 有效；5/5 条 workflow 故障场景通过。评测使用运行时 Chroma 的项目内副本，正常库前后文件哈希不变。详见 [Chroma 语义报告](docs/evidence/chroma-semantic-report.json) 与 [workflow 故障报告](docs/evidence/workflow-fault-report.json)。未命中的 `project-knowledge-031` 被如实保留；这些指标来自虚构固定集，不代表真实企业语料。
 
 运行本地容量基线：
 
@@ -165,6 +177,7 @@ POST /v1/tasks/demo-002/approval
 - 提供 FastAPI、中间件适配边界、OpenTelemetry span 和自动化测试。
 - 提供可重复生成的 100 条复合任务合同集与 30 条故障注入集，并保留机器可读结果。
 - 完成 1,000 条混合请求的本地模拟容量基线，保留吞吐和 P50/P95/P99 延迟。
+- 使用固定 `BAAI/bge-small-zh-v1.5` revision 完成真实 Chroma 语义检索评测，并隔离正常运行库。
 
 仓库当前不能单独证明：
 

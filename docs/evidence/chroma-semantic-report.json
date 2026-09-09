@@ -1,0 +1,30 @@
+{
+  "run_id": "a81180999a44",
+  "started_at_utc": "2026-09-09T08:57:22+00:00",
+  "elapsed_seconds": 4.65,
+  "data_sha256": "4cdfcaf6b225bb5bb27030c2220cfc81c169e0ad3ec555499bd9189bab6b0bd3",
+  "model_revision": "7999e1d3359715c523056ef9478215996d62a620",
+  "collection": "zhida-knowledge-v1",
+  "total_cases": 100,
+  "knowledge_total": 40,
+  "knowledge_hit_queries": 39,
+  "knowledge_hit_at_5": 0.975,
+  "knowledge_mrr": 0.85,
+  "knowledge_failed_query_ids": [
+    "project-knowledge-031"
+  ],
+  "tool_selection_total": 100,
+  "tool_selection_correct": 100,
+  "tool_selection_accuracy": 1.0,
+  "permission_total": 100,
+  "permission_correct": 100,
+  "permission_accuracy": 1.0,
+  "tool_schema_total": 60,
+  "tool_schema_valid": 60,
+  "tool_schema_accuracy": 1.0,
+  "tool_selection_failed_query_ids": [],
+  "permission_failed_query_ids": [],
+  "tool_schema_failed_query_ids": [],
+  "normal_chroma_unchanged": true,
+  "boundary": "Knowledge Hit@5/MRR denominator is 40 knowledge cases; tool and permission metrics use all 100; schema metrics use 60 tool cases. Normal Chroma is copied to a run-isolated snapshot; no create_ticket or human approval is executed."
+}

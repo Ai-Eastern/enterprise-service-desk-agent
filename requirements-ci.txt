@@ -1,5 +1,5 @@
 # Lightweight contract-test dependencies. Full local/production dependencies are in requirements.txt.
-pydantic==2.13.5
+pydantic==2.12.5
 mcp==2.2.0
 a2a-sdk==1.1.2
 fastapi==0.141.1

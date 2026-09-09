@@ -1,0 +1,33 @@
+{
+  "run_id": "ccb371e8fbfe",
+  "started_at_utc": "2026-09-09T08:59:06+00:00",
+  "elapsed_seconds": 92.411,
+  "cases": {
+    "tool_timeout": {
+      "status": "PASS",
+      "result": "timeout",
+      "waited_seconds": 0,
+      "side_effect": false,
+      "execution": "start_workflow.execute_tool"
+    },
+    "permission_denied": {
+      "status": "PASS",
+      "tickets_created": false
+    },
+    "idempotency_replay": {
+      "status": "PASS",
+      "database_rows": 1
+    },
+    "human_rejection": {
+      "status": "PASS",
+      "tickets_created": false
+    },
+    "process_restart_resume": {
+      "status": "PASS",
+      "checkpoint_exists_after_pause": true,
+      "database_rows": 1
+    }
+  },
+  "normal_chroma_unchanged": true,
+  "boundary": "Workflow fault evidence is excluded from retrieval Hit@5/MRR; normal tickets/checkpoints are unused; normal Chroma is copied before execution and the copied snapshot is used; the normal Chroma hash manifest remains unchanged during this accepted run."
+}
