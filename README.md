@@ -154,6 +154,7 @@ POST /v1/tasks/demo-002/approval
 - src/a2a_poc.py：A2A 0.3 历史 PoC 的任务模型，当前 SDK 通过兼容层运行。
 - src/infrastructure/production_adapters.py：Milvus/PostgreSQL/Redis 适配边界。
 - src/eval/：检索、工作流和故障评测入口。
+- docs/面试演示指南.md：三分钟讲法、演示命令、简历口径与证据边界。
 
 ## 履历口径与证据边界
 
