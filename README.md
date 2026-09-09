@@ -2,8 +2,8 @@
 
 面向政企内部服务台的 Agent 工程演进项目。它不是单纯的工单审批系统：先检索制度与知识、判断问题类型、查询服务状态；只有确实需要写入工单时，才进入权限校验、人工审批和幂等建单。
 
-> 当前标签：`v0.2.0-mcp-pilot`
-> 履历对应阶段：2025 H1（代码与 Git 提交在当前日期重新整理，不伪造历史提交时间）
+> 当前标签：`v0.3.0-a2a-poc`
+> 履历对应阶段：2025 H2（代码与 Git 提交在当前日期重新整理，不伪造历史提交时间）
 
 ## 当前版本实现
 
@@ -16,6 +16,9 @@
 - 使用官方 `mcp==1.9.4` 在本地 stdio 注册唯一只读工具 `get_service_status`。
 - MCP 输入只接受 `user_id` 与 `product_id`；角色由服务端可信映射解析。
 - `create_ticket` 没有注册到 MCP，不能绕过 LangGraph 人工复核。
+- 使用官方 `a2a-sdk==0.3.6` 描述独立诊断 Agent。
+- 形成 Agent Card，以及 submitted -> working -> completed/failed 的任务状态与结果回传。
+- 当前 A2A 是本地协议模型 PoC，不宣称远程互操作或生产部署。
 
 ## 为什么不是“只做审批”
 
@@ -68,11 +71,12 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
 - `src/tools/platform_tools.py`：状态查询与幂等建单工具。
 - `src/agent/workflow.py`：LangGraph 编排、人工复核和断点恢复。
 - `src/mcp_server.py`：MCP 1.x 本地 stdio 只读适配器。
+- `src/a2a_poc.py`：A2A Agent Card、任务状态、结果和失败回传。
 - `src/eval/`：检索、工作流与故障评测入口。
 
 ## 证据边界
 
-本版本是本地工程 Demo。代码与自动化检查可以证明权限、路由、人工门禁、幂等合同和本地 MCP 工具注册；不能证明第三方 MCP 客户端兼容、真实国企部署、生产 IAM、真实用户数据、800+ 日任务量、Milvus/PostgreSQL/Redis 集群、GUI 或用户验收。
+本版本是本地工程 Demo。代码与自动化检查可以证明权限、路由、人工门禁、幂等合同、本地 MCP 工具注册和 A2A 任务模型；不能证明第三方 MCP/A2A 客户端互操作、真实国企部署、生产 IAM、真实用户数据、800+ 日任务量、Milvus/PostgreSQL/Redis 集群、GUI 或用户验收。
 
 ## 许可证
 

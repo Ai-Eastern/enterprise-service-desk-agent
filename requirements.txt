@@ -10,3 +10,6 @@ pyarrow==24.0.0
 
 # 2025 H1 MCP pilot baseline (released 2025-06-12).
 mcp==1.9.4
+
+# 2025 H2 A2A proof-of-concept baseline (released 2025-09-09).
+a2a-sdk==0.3.6
