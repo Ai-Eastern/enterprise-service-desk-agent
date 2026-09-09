@@ -47,40 +47,22 @@ else {
     $projectPython = Join-Path $installRoot 'python.exe'
     $runtimeManifest = Join-Path $installRoot 'provenance.json'
     $runtimeReady = $false
-    if (Test-Path -LiteralPath $projectPython -PathType Leaf -and Test-Path -LiteralPath $runtimeManifest -PathType Leaf) {
+    if ((Test-Path -LiteralPath $projectPython -PathType Leaf) -and (Test-Path -LiteralPath $runtimeManifest -PathType Leaf)) {
         try {
             $provenance = Get-Content -LiteralPath $runtimeManifest -Raw | ConvertFrom-Json
+            $content = Get-RuntimeContentManifest -Root $installRoot
             $runtimeReady = $provenance.source_url -eq 'https://api.nuget.org/v3-flatcontainer/python/3.10.11/python.3.10.11.nupkg' -and
-                $provenance.sha512 -eq '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950' -and
+                $provenance.package_sha512 -eq '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950' -and
                 $provenance.python_version -eq '3.10.11' -and $provenance.architecture -eq 'x64' -and
+                [int]$provenance.file_count -eq $content.file_count -and $provenance.content_manifest_sha256 -eq $content.content_manifest_sha256 -and
+                $content.file_count -eq 1965 -and $content.content_manifest_sha256 -eq 'A36ACE6695719F55BB070922E1B00BD0FA1869D79C9139CF9DB92378B228EF4E' -and
                 (Test-Python31011X64 -Executable $projectPython)
         }
         catch {
             $runtimeReady = $false
         }
     }
-    $candidates = @()
-    if ($runtimeReady) {
-        $candidates += ,@($projectPython, @())
-    }
-    foreach ($name in @('python.exe', 'python3.exe')) {
-        $command = Get-Command $name -ErrorAction SilentlyContinue
-        if ($command) {
-            $candidates += ,@($command.Source, @())
-        }
-    }
-    $launcher = Get-Command 'py.exe' -ErrorAction SilentlyContinue
-    if ($launcher) {
-        $candidates += ,@($launcher.Source, @('-3.10-64'))
-    }
-
-    foreach ($candidate in $candidates) {
-        if (Test-Python31011X64 -Executable $candidate[0] -PrefixArguments $candidate[1]) {
-            $baseCommand = $candidate[0]
-            $basePrefix = $candidate[1]
-            break
-        }
-    }
+    if ($runtimeReady) { $baseCommand = $projectPython }
     if (-not $baseCommand) {
         $runtimeUrl = 'https://api.nuget.org/v3-flatcontainer/python/3.10.11/python.3.10.11.nupkg'
         $runtimeSha512 = '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950'
@@ -104,19 +86,47 @@ else {
         if ($LASTEXITCODE -ne 0) {
             Stop-Bootstrap 'Python runtime ensurepip 验证失败。'
         }
-        [ordered]@{
+        $content = Get-RuntimeContentManifest -Root $stagingRoot
+        if ($content.file_count -ne 1965 -or $content.content_manifest_sha256 -ne 'A36ACE6695719F55BB070922E1B00BD0FA1869D79C9139CF9DB92378B228EF4E') {
+            Stop-Bootstrap 'Python runtime content manifest 校验失败。'
+        }
+        $provenanceJson = [ordered]@{
             source_url = $runtimeUrl
-            sha512 = $runtimeSha512
+            package_sha512 = $runtimeSha512
+            content_manifest_sha256 = $content.content_manifest_sha256
+            file_count = $content.file_count
             python_version = '3.10.11'
             architecture = 'x64'
-        } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $stagingRoot 'provenance.json') -Encoding utf8NoBOM
+        } | ConvertTo-Json
+        [IO.File]::WriteAllText((Join-Path $stagingRoot 'provenance.json'), $provenanceJson, (New-Object Text.UTF8Encoding($false)))
+        $quarantineRoot = $null
         if (Test-Path -LiteralPath $installRoot) {
             $quarantineRoot = Join-Path (Split-Path -Parent $installRoot) ('python-3.10.11.quarantine-' + [guid]::NewGuid().ToString('N'))
             Move-Item -LiteralPath $installRoot -Destination $quarantineRoot
         }
-        Move-Item -LiteralPath $stagingRoot -Destination $installRoot
+        try { Move-Item -LiteralPath $stagingRoot -Destination $installRoot }
+        catch {
+            if ($quarantineRoot -and (Test-Path -LiteralPath $quarantineRoot)) { Move-Item -LiteralPath $quarantineRoot -Destination $installRoot }
+            Stop-Bootstrap 'Python runtime 原子替换失败。'
+        }
         $baseCommand = $projectPython
     }
+}
+
+function Get-RuntimeContentManifest {
+    param([string]$Root)
+    $manifestPath = Join-Path $Root 'provenance.json'
+    $entries = [System.Collections.Generic.List[string]]::new()
+    foreach ($file in @(Get-ChildItem -LiteralPath $Root -Recurse -File -Force | Where-Object { $_.FullName -ne $manifestPath })) {
+        $relative = $file.FullName.Substring($Root.Length).TrimStart('\').Replace('\', '/')
+        $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToUpperInvariant()
+        $entries.Add("$relative`t$hash")
+    }
+    $sorted = $entries.ToArray()
+    [Array]::Sort($sorted, [StringComparer]::Ordinal)
+    $bytes = [Text.Encoding]::UTF8.GetBytes([String]::Join("`n", $sorted))
+    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+    [pscustomobject]@{ file_count = $sorted.Count; content_manifest_sha256 = [Convert]::ToHexString($digest) }
 }
 
 $env:HF_HOME = Join-Path $ProjectRoot '.cache\huggingface'
@@ -156,25 +166,39 @@ if (-not (Test-Python31011X64 -Executable $venvPython)) {
 
 Write-Host "基础解释器：$baseCommand $basePrefix"
 Write-Host "项目解释器：$venvPython"
-Write-Host '正在安装锁定的构建工具。'
-& $venvPython -m pip install --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: 'pip==24.3.1' 'setuptools==75.6.0' 'wheel==0.45.1'
+Write-Host '正在下载并校验锁定的构建工具。'
+$toolDirectory = Join-Path $ProjectRoot '.tmp\bootstrap-tools'
+$bootstrapTools = @(
+    [pscustomobject]@{ Name = 'pip-24.3.1-py3-none-any.whl'; Url = 'https://files.pythonhosted.org/packages/ef/7d/500c9ad20238fcfcb4cb9243eede163594d7020ce87bd9610c9e02771876/pip-24.3.1-py3-none-any.whl'; Sha256 = '3790624780082365F47549D032F3770EEB2B1E8BD1F7B2E02DACE1AFA361B4ED' }
+    [pscustomobject]@{ Name = 'setuptools-75.6.0-py3-none-any.whl'; Url = 'https://files.pythonhosted.org/packages/55/21/47d163f615df1d30c094f6c8bbb353619274edccf0327b185cc2493c2c33/setuptools-75.6.0-py3-none-any.whl'; Sha256 = 'CE74B49E8F7110F9BF04883B730F4765B774EF3EF28F722CCE7C273D253AAF7D' }
+    [pscustomobject]@{ Name = 'wheel-0.45.1-py3-none-any.whl'; Url = 'https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl'; Sha256 = '708E7481CC80179AF0E556BBF0CC00B8444C7321E2700B8D8580231D13017248' }
+)
+New-Item -ItemType Directory -Force -Path $toolDirectory | Out-Null
+$toolArchives = @()
+foreach ($tool in $bootstrapTools) {
+    $archive = Join-Path $toolDirectory $tool.Name
+    Invoke-WebRequest -Uri $tool.Url -OutFile $archive
+    if ((Get-FileHash -Algorithm SHA256 -LiteralPath $archive).Hash -ne $tool.Sha256) {
+        Stop-Bootstrap "构建工具 SHA256 校验失败：$($tool.Name)"
+    }
+    $toolArchives += $archive
+}
+& $venvPython -m pip install --isolated --no-index --no-deps @toolArchives
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap '构建工具安装失败。'
 }
 
 $pypikaDirectory = Join-Path $ProjectRoot '.tmp\pypika'
-$pypikaArchive = Join-Path $pypikaDirectory 'pypika-0.48.9.tar.gz'
+$pypikaArchive = Join-Path $pypikaDirectory 'PyPika-0.48.9.tar.gz'
+$pypikaUrl = 'https://files.pythonhosted.org/packages/c7/2c/94ed7b91db81d61d7096ac8f2d325ec562fc75e35f3baea8749c85b28784/PyPika-0.48.9.tar.gz'
 $pypikaSha256 = '838836A61747E7C8380CD1B7FF638694B7A7335345D0F559B04B2CD832AD5378'
 New-Item -ItemType Directory -Force -Path $pypikaDirectory | Out-Null
 Write-Host '正在下载并校验 pypika 0.48.9 sdist。'
-& $venvPython -m pip download --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --no-binary=:all: --dest $pypikaDirectory 'pypika==0.48.9'
-if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $pypikaArchive -PathType Leaf)) {
-    Stop-Bootstrap 'pypika sdist 下载失败或文件不存在。'
-}
+Invoke-WebRequest -Uri $pypikaUrl -OutFile $pypikaArchive
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $pypikaArchive).Hash -ne $pypikaSha256) {
     Stop-Bootstrap 'pypika sdist SHA256 校验失败。'
 }
-& $venvPython -m pip install --isolated --disable-pip-version-check --no-deps --no-build-isolation $pypikaArchive
+& $venvPython -m pip install --isolated --no-index --no-deps --no-build-isolation $pypikaArchive
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap 'pypika sdist 安装失败。'
 }
