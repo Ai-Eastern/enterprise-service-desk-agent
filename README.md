@@ -6,7 +6,7 @@
 
 它不是单纯的工单审批系统。系统先理解问题并分流：知识类问题检索后回答，状态类问题交给诊断 Agent，只有确实需要写入工单时才触发权限校验、人工审批和幂等写入。
 
-> 当前发布：**v1.1.0-evidence**（v1.0 多 Agent 能力的可复现实证补充）
+> 当前发布：**v1.2.0-integration**（v1.0 多 Agent 能力的本地中间件联调与容量基线）
 > 履历对应阶段：2026
 > Git 说明：四个阶段均在当前日期重新整理为真实提交和标签，没有伪造历史提交日期。
 
@@ -32,6 +32,7 @@ GitHub Releases 保留四个阶段标签；后续修正使用普通补丁版本�
 | v0.3.0-a2a-poc | 2025 H2 | 官方 a2a-sdk==0.3.6，Agent Card、任务状态、结果与失败回传 | 仅本地 PoC，未宣称生产互操作 |
 | v1.0.0-multi-agent | 2026 | 五类 Agent 协作、FastAPI、追踪、生产中间件适配边界 | 未接真实政企业务系统或生产集群 |
 | v1.1.0-evidence | 2026 | 100 条复合任务合同集、30 条故障注入集和机器可读报告 | 不等同于生产数据、容量或用户验收 |
+| v1.2.0-integration | 2026 | PostgreSQL/Redis/Milvus 本地容器联调；1,000 条并发 ASGI 容量基线 | 不等同于生产拓扑、外部系统或生产压测 |
 
 当前 v1.0 使用 2026 可安装的维护线 mcp==2.2.0 与 a2a-sdk==1.1.2；历史标签保留当时可用的 SDK pin。详见 [版本演进说明](docs/版本演进.md)。
 
@@ -86,6 +87,26 @@ powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
 当前固定证据为 **100/100 条复合任务合同通过、30/30 条故障注入合同通过**。复合任务覆盖知识/状态/建单分流、请求 Schema、引用映射、权限和人工审批门禁；故障集覆盖未知身份、只读身份越权、诊断超时、中断恢复、重复执行和人工拒绝。机器可读结果见 [contract-report.json](docs/evidence/contract-report.json)。
 
 这组结果是本地确定性合同证据，不是语义检索质量、真实政企业务联调、生产 IAM、容量压测或用户验收。完整 RAG 检索评测仍由 `src/eval/project_eval.py` 独立执行，避免把桩函数结果包装成真实检索成绩。
+
+运行本地容量基线：
+
+~~~powershell
+.\.venv\Scripts\python.exe scripts/run_capacity_baseline.py
+~~~
+
+当前留档结果为 **1,000/1,000 条混合请求成功**，并发 20；400 条知识、300 条状态和 300 条建单前人工中断请求。吞吐与 P50/P95/P99 见 [capacity-baseline.json](docs/evidence/capacity-baseline.json)。这是进程内 ASGI 与确定性内存适配器的模拟容量基线，只能支撑“完成 800+ 任务量级的本地容量评估”，不能写成真实日均流量或生产压测。
+
+运行本地中间件联调：
+
+~~~powershell
+docker compose -f compose.integration.yml up -d --wait
+.\.venv\Scripts\python.exe scripts/run_integration_smoke.py
+docker compose -f compose.integration.yml down
+~~~
+
+当前留档结果为 **3/3 项真实本地容器回环通过**：PostgreSQL 验证幂等键复用原工单 ID，Redis 验证带 TTL 的任务状态读写，Milvus 验证查询阶段 `visibility` 过滤只返回公开文档。Compose 复用固定版本的官方 PostgreSQL/Redis 镜像与 Milvus 官方 standalone 依赖结构，结果见 [integration-report.json](docs/evidence/integration-report.json)。这只能证明本机容器和真实客户端的一次有界联调，不证明生产高可用、备份、容灾、安全加固、持续负载或外部业务系统。
+
+容器基线参考 [Milvus 官方 standalone Compose](https://milvus.io/docs/install_standalone-docker-compose.md)、[PostgreSQL Docker Official Image](https://hub.docker.com/_/postgres) 与 [Redis Docker Official Image](https://hub.docker.com/_/redis)；项目固定精确版本，避免 `latest` 漂移。
 
 查看任一历史阶段：
 
@@ -142,12 +163,13 @@ POST /v1/tasks/demo-002/approval
 - 分阶段完成 MCP 只读工具试点、A2A 任务模型验证和多 Agent 编排。
 - 提供 FastAPI、中间件适配边界、OpenTelemetry span 和自动化测试。
 - 提供可重复生成的 100 条复合任务合同集与 30 条故障注入集，并保留机器可读结果。
+- 完成 1,000 条混合请求的本地模拟容量基线，保留吞吐和 P50/P95/P99 延迟。
 
 仓库当前不能单独证明：
 
 - 真实国企生产部署、生产 IAM 或真实用户数据。
 - 日均 800+ 次真实任务量；若写入履历，应另有压测报告并明确是模拟容量测试还是生产统计。
-- Milvus/PostgreSQL/Redis 真实集群联调、容灾和性能验收。
+- Milvus/PostgreSQL/Redis 生产集群、容灾和性能验收；仓库只完成本地容器回环。
 - 第三方 MCP/A2A 客户端生态兼容、GUI、发布或用户验收。
 
 ## 许可证

@@ -1,0 +1,33 @@
+{
+  "suite": "local-asgi-capacity-v1",
+  "status": "PASS",
+  "run_at_utc": "2026-09-09T07:48:32+00:00",
+  "environment": {
+    "python": "3.11.16",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "workload": {
+    "total": 1000,
+    "concurrency": 20,
+    "routes": {
+      "diagnostic": 300,
+      "knowledge": 400,
+      "ticket": 300
+    }
+  },
+  "results": {
+    "succeeded": 1000,
+    "failed": 0,
+    "elapsed_seconds": 0.621,
+    "throughput_tasks_per_second": 1609.62,
+    "latency_ms": {
+      "mean": 10.86,
+      "p50": 8.871,
+      "p95": 19.66,
+      "p99": 24.304,
+      "max": 35.24
+    },
+    "failure_samples": []
+  },
+  "boundary": "Local in-process ASGI simulation with deterministic in-memory adapters. It validates 1,000 mixed request contracts under bounded concurrency, not daily production traffic, network/server capacity, real RAG latency, Milvus/PostgreSQL/Redis, production IAM, external services or user acceptance."
+}

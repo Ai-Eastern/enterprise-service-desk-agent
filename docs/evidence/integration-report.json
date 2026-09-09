@@ -1,0 +1,32 @@
+{
+  "suite": "local-container-integration-v1",
+  "status": "PASS",
+  "run_at_utc": "2026-09-09T07:48:31+00:00",
+  "dependencies": {
+    "pymilvus": "3.0.1",
+    "psycopg": "3.3.5",
+    "redis": "8.1.0"
+  },
+  "cases": {
+    "postgres_idempotency": {
+      "status": "PASS",
+      "assertion": "same idempotency key returns the original ticket id"
+    },
+    "redis_task_state": {
+      "status": "PASS",
+      "assertion": "task state survives a Redis round trip with TTL"
+    },
+    "milvus_visibility": {
+      "status": "PASS",
+      "assertion": "Milvus query-time visibility filter returns only public data",
+      "returned_doc_ids": [
+        "public-doc"
+      ]
+    }
+  },
+  "summary": {
+    "passed": 3,
+    "total": 3
+  },
+  "boundary": "Real local Docker containers and real client libraries. This proves only one bounded adapter round trip per service; it does not prove production topology, HA, backup, security hardening, failover, sustained load or external systems."
+}
