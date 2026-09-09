@@ -27,6 +27,7 @@ class ToolErrorCode(str, Enum):
     PERMISSION_DENIED = "permission_denied"
     PRODUCT_NOT_FOUND = "product_not_found"
     DATABASE_BUSY = "database_busy"
+    IDEMPOTENCY_CONFLICT = "idempotency_conflict"
     INTERNAL_ERROR = "internal_error"
     TIMEOUT = "timeout"
 
@@ -168,6 +169,36 @@ def create_ticket(
             "summary TEXT NOT NULL, status TEXT NOT NULL, created_at TEXT NOT NULL"
             ")"
         )
+        connection.execute(
+            "CREATE TABLE IF NOT EXISTS audit_events ("
+            "event_id TEXT PRIMARY KEY, created_at TEXT NOT NULL, "
+            "actor_user_id TEXT NOT NULL, actor_role TEXT NOT NULL, "
+            "action TEXT NOT NULL, outcome TEXT NOT NULL, "
+            "resource_type TEXT NOT NULL, resource_id TEXT NOT NULL, "
+            "product_id TEXT NOT NULL, idempotency_key TEXT NOT NULL"
+            ")"
+        )
+
+        def write_audit(outcome: str, resource_id: str) -> None:
+            connection.execute(
+                "INSERT INTO audit_events ("
+                "event_id, created_at, actor_user_id, actor_role, action, outcome, "
+                "resource_type, resource_id, product_id, idempotency_key"
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    uuid.uuid4().hex,
+                    datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                    context.user_id,
+                    context.role.value,
+                    "create_ticket",
+                    outcome,
+                    "ticket",
+                    resource_id,
+                    validated.product_id,
+                    validated.idempotency_key,
+                ),
+            )
+
         ticket_id = uuid.uuid4().hex
         created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         try:
@@ -189,13 +220,28 @@ def create_ticket(
             reused = False
         except sqlite3.IntegrityError:
             existing = connection.execute(
-                "SELECT ticket_id FROM tickets WHERE idempotency_key = ?",
+                "SELECT ticket_id, user_id, role, product_id, summary "
+                "FROM tickets WHERE idempotency_key = ?",
                 (validated.idempotency_key,),
             ).fetchone()
             if existing is None:
                 raise
-            ticket_id = str(existing[0])
+            ticket_id, existing_user_id, existing_role, existing_product_id, existing_summary = existing
+            if (existing_user_id, existing_role, existing_product_id, existing_summary) != (
+                context.user_id,
+                context.role.value,
+                validated.product_id,
+                validated.summary,
+            ):
+                write_audit("idempotency_conflict", str(ticket_id))
+                connection.commit()
+                raise ToolError(
+                    ToolErrorCode.IDEMPOTENCY_CONFLICT,
+                    "幂等键已用于不同的工单参数。",
+                )
+            ticket_id = str(ticket_id)
             reused = True
+        write_audit("reused" if reused else "created", ticket_id)
         connection.commit()
         return {"ticket_id": ticket_id, "reused": reused}
     except sqlite3.OperationalError as exc:

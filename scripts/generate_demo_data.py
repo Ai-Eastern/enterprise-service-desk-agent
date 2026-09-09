@@ -13,18 +13,42 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.config import PROJECT_PATHS
-from src.data_schema import EvaluationCase, EvalTool, KnowledgeDocument, PermissionResult, Product, Visibility
+from src.data_schema import (
+    DEMO_DATA_CLASSIFICATION,
+    DEMO_IDENTITIES,
+    EvaluationCase,
+    EvalTool,
+    KnowledgeDocument,
+    PermissionResult,
+    Product,
+    Visibility,
+)
 
 
 PRODUCT_FIELDS = ("product_id", "name", "service_status", "status_message")
 TICKET_FIELDS = (
     "ticket_id",
     "idempotency_key",
-    "created_at",
+    "user_id",
     "role",
     "product_id",
     "summary",
     "status",
+    "created_at",
+)
+IDENTITY_FIELDS = ("user_id", "role", "allowed_visibilities", "data_classification")
+AUDIT_FIELDS = (
+    "event_id",
+    "created_at",
+    "actor_user_id",
+    "actor_role",
+    "action",
+    "outcome",
+    "resource_type",
+    "resource_id",
+    "product_id",
+    "idempotency_key",
+    "data_classification",
 )
 EVAL_FILENAME = "project_eval.json"
 
@@ -306,6 +330,10 @@ def _write_evaluation(path: Path) -> None:
     )
 
 
+def _write_empty_csv(path: Path, fields: tuple[str, ...]) -> None:
+    _write_csv(path, fields, ())
+
+
 def generate(output_dir: Path) -> tuple[Path, ...]:
     output_dir = output_dir.resolve()
     knowledge_dir = output_dir / "knowledge"
@@ -324,6 +352,25 @@ def generate(output_dir: Path) -> tuple[Path, ...]:
     tickets_path = output_dir / "tickets.csv"
     _write_csv(tickets_path, TICKET_FIELDS, ())
     written.append(tickets_path)
+    identities_path = output_dir / "identities.csv"
+    with identities_path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=IDENTITY_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        for identity in DEMO_IDENTITIES:
+            writer.writerow(
+                {
+                    "user_id": identity.user_id,
+                    "role": identity.role,
+                    "allowed_visibilities": ",".join(
+                        value.value for value in identity.allowed_visibilities
+                    ),
+                    "data_classification": identity.data_classification,
+                }
+            )
+    written.append(identities_path)
+    audit_path = output_dir / "audit.csv"
+    _write_empty_csv(audit_path, AUDIT_FIELDS)
+    written.append(audit_path)
     evaluation_path = output_dir / "eval" / EVAL_FILENAME
     _write_evaluation(evaluation_path)
     written.append(evaluation_path)

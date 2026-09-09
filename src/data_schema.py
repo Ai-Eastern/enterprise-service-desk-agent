@@ -30,6 +30,51 @@ def _stable_id(name: str, value: str) -> str:
     return cleaned
 
 
+DEMO_DATA_CLASSIFICATION = "fictional_demo_redacted"
+_DEMO_ROLES = frozenset({"admin", "support", "readonly"})
+
+
+@dataclass(frozen=True)
+class DemoIdentity:
+    user_id: str
+    role: str
+    allowed_visibilities: tuple[Visibility, ...]
+    data_classification: str = DEMO_DATA_CLASSIFICATION
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "user_id", _stable_id("user_id", self.user_id))
+        role = _required_text("role", self.role)
+        if role not in _DEMO_ROLES:
+            raise ValueError("role 必须是 admin、support 或 readonly。")
+        object.__setattr__(self, "role", role)
+        try:
+            visibilities = tuple(Visibility(value) for value in self.allowed_visibilities)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("allowed_visibilities 包含无效范围。") from exc
+        if not visibilities:
+            raise ValueError("allowed_visibilities 不得为空。")
+        object.__setattr__(self, "allowed_visibilities", visibilities)
+        classification = _required_text("data_classification", self.data_classification)
+        if classification != DEMO_DATA_CLASSIFICATION:
+            raise ValueError("演示身份必须标记为 fictional_demo_redacted。")
+        object.__setattr__(self, "data_classification", classification)
+
+    def as_dict(self) -> dict[str, object]:
+        return {
+            "user_id": self.user_id,
+            "role": self.role,
+            "allowed_visibilities": [value.value for value in self.allowed_visibilities],
+            "data_classification": self.data_classification,
+        }
+
+
+DEMO_IDENTITIES = (
+    DemoIdentity("admin-demo", "admin", (Visibility.PUBLIC, Visibility.SUPPORT, Visibility.ADMIN)),
+    DemoIdentity("support-demo", "support", (Visibility.PUBLIC, Visibility.SUPPORT)),
+    DemoIdentity("readonly-demo", "readonly", (Visibility.PUBLIC,)),
+)
+
+
 @dataclass(frozen=True)
 class KnowledgeDocument:
     doc_id: str

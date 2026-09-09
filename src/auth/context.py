@@ -8,7 +8,7 @@ from typing import Final, Mapping
 
 from pydantic import BaseModel, ConfigDict
 
-from src.data_schema import Visibility
+from src.data_schema import DEMO_IDENTITIES, Visibility
 
 
 class Role(str, Enum):
@@ -25,23 +25,16 @@ class UserContext(BaseModel):
     allowed_visibilities: tuple[Visibility, ...]
 
 
-_IDENTITIES: Final[Mapping[str, UserContext]] = MappingProxyType({
-    "admin-demo": UserContext(
-        user_id="admin-demo",
-        role=Role.ADMIN,
-        allowed_visibilities=(Visibility.PUBLIC, Visibility.SUPPORT, Visibility.ADMIN),
-    ),
-    "support-demo": UserContext(
-        user_id="support-demo",
-        role=Role.SUPPORT,
-        allowed_visibilities=(Visibility.PUBLIC, Visibility.SUPPORT),
-    ),
-    "readonly-demo": UserContext(
-        user_id="readonly-demo",
-        role=Role.READONLY,
-        allowed_visibilities=(Visibility.PUBLIC,),
-    ),
-})
+_IDENTITIES: Final[Mapping[str, UserContext]] = MappingProxyType(
+    {
+        identity.user_id: UserContext(
+            user_id=identity.user_id,
+            role=Role(identity.role),
+            allowed_visibilities=identity.allowed_visibilities,
+        )
+        for identity in DEMO_IDENTITIES
+    }
+)
 
 
 def resolve_user(user_id: str) -> UserContext:
