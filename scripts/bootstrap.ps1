@@ -43,9 +43,24 @@ if ($BasePython) {
     }
 }
 else {
-    $projectPython = Join-Path $ProjectRoot '.tooling\python-3.10.11\python.exe'
+    $installRoot = Join-Path $ProjectRoot '.tooling\python-3.10.11'
+    $projectPython = Join-Path $installRoot 'python.exe'
+    $runtimeManifest = Join-Path $installRoot 'provenance.json'
+    $runtimeReady = $false
+    if (Test-Path -LiteralPath $projectPython -PathType Leaf -and Test-Path -LiteralPath $runtimeManifest -PathType Leaf) {
+        try {
+            $provenance = Get-Content -LiteralPath $runtimeManifest -Raw | ConvertFrom-Json
+            $runtimeReady = $provenance.source_url -eq 'https://api.nuget.org/v3-flatcontainer/python/3.10.11/python.3.10.11.nupkg' -and
+                $provenance.sha512 -eq '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950' -and
+                $provenance.python_version -eq '3.10.11' -and $provenance.architecture -eq 'x64' -and
+                (Test-Python31011X64 -Executable $projectPython)
+        }
+        catch {
+            $runtimeReady = $false
+        }
+    }
     $candidates = @()
-    if (Test-Path -LiteralPath $projectPython -PathType Leaf) {
+    if ($runtimeReady) {
         $candidates += ,@($projectPython, @())
     }
     foreach ($name in @('python.exe', 'python3.exe')) {
@@ -69,22 +84,38 @@ else {
     if (-not $baseCommand) {
         $runtimeUrl = 'https://api.nuget.org/v3-flatcontainer/python/3.10.11/python.3.10.11.nupkg'
         $runtimeSha512 = '23A600C0BB647698802DA679200FF44C08F4D82B939E109933681A59F9F5DD30D2CAF3EE09118A97598019B6E4D07BD79FFDEA2139405A379BC0AB259178F950'
-        $runtimePackage = Join-Path $ProjectRoot '.tmp\python.3.10.11.nupkg'
-        $installRoot = Join-Path $ProjectRoot '.tooling\python-3.10.11'
-        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $runtimePackage), $installRoot | Out-Null
+        $runtimePackage = Join-Path $ProjectRoot '.tmp\python.3.10.11.nupkg.download'
+        $stagingRoot = Join-Path (Split-Path -Parent $installRoot) ('python-3.10.11.staging-' + [guid]::NewGuid().ToString('N'))
+        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $runtimePackage), $stagingRoot | Out-Null
         Write-Host '未找到 Python 3.10.11 x64，正在从 NuGet 下载 PSF runtime。'
         Invoke-WebRequest -Uri $runtimeUrl -OutFile $runtimePackage
         if ((Get-FileHash -Algorithm SHA512 -LiteralPath $runtimePackage).Hash -ne $runtimeSha512) {
             Stop-Bootstrap "Python runtime SHA512 校验失败：$runtimePackage"
         }
-        & tar.exe -xf $runtimePackage -C $installRoot --strip-components 1 tools
+        & tar.exe -xf $runtimePackage -C $stagingRoot --strip-components 1 tools
         if ($LASTEXITCODE -ne 0) {
             Stop-Bootstrap '解包 Python 3.10.11 x64 runtime 失败。'
         }
-        $baseCommand = Join-Path $installRoot 'python.exe'
-        if (-not (Test-Python31011X64 -Executable $baseCommand)) {
-            Stop-Bootstrap "解包后未发现合格的 Python 3.10.11 x64：$baseCommand"
+        $stagingPython = Join-Path $stagingRoot 'python.exe'
+        if (-not (Test-Python31011X64 -Executable $stagingPython)) {
+            Stop-Bootstrap "解包后未发现合格的 Python 3.10.11 x64：$stagingPython"
         }
+        & $stagingPython -m ensurepip --version
+        if ($LASTEXITCODE -ne 0) {
+            Stop-Bootstrap 'Python runtime ensurepip 验证失败。'
+        }
+        [ordered]@{
+            source_url = $runtimeUrl
+            sha512 = $runtimeSha512
+            python_version = '3.10.11'
+            architecture = 'x64'
+        } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $stagingRoot 'provenance.json') -Encoding utf8NoBOM
+        if (Test-Path -LiteralPath $installRoot) {
+            $quarantineRoot = Join-Path (Split-Path -Parent $installRoot) ('python-3.10.11.quarantine-' + [guid]::NewGuid().ToString('N'))
+            Move-Item -LiteralPath $installRoot -Destination $quarantineRoot
+        }
+        Move-Item -LiteralPath $stagingRoot -Destination $installRoot
+        $baseCommand = $projectPython
     }
 }
 
@@ -126,7 +157,7 @@ if (-not (Test-Python31011X64 -Executable $venvPython)) {
 Write-Host "基础解释器：$baseCommand $basePrefix"
 Write-Host "项目解释器：$venvPython"
 Write-Host '正在安装锁定的构建工具。'
-& $venvPython -m pip install --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: 'pip==24.3.1' 'setuptools==75.6.0' 'wheel==0.45.1'
+& $venvPython -m pip install --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: 'pip==24.3.1' 'setuptools==75.6.0' 'wheel==0.45.1'
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap '构建工具安装失败。'
 }
@@ -136,20 +167,20 @@ $pypikaArchive = Join-Path $pypikaDirectory 'pypika-0.48.9.tar.gz'
 $pypikaSha256 = '838836A61747E7C8380CD1B7FF638694B7A7335345D0F559B04B2CD832AD5378'
 New-Item -ItemType Directory -Force -Path $pypikaDirectory | Out-Null
 Write-Host '正在下载并校验 pypika 0.48.9 sdist。'
-& $venvPython -m pip download --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --no-binary=:all: --dest $pypikaDirectory 'pypika==0.48.9'
+& $venvPython -m pip download --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --no-binary=:all: --dest $pypikaDirectory 'pypika==0.48.9'
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $pypikaArchive -PathType Leaf)) {
     Stop-Bootstrap 'pypika sdist 下载失败或文件不存在。'
 }
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $pypikaArchive).Hash -ne $pypikaSha256) {
     Stop-Bootstrap 'pypika sdist SHA256 校验失败。'
 }
-& $venvPython -m pip install --disable-pip-version-check --no-deps --no-build-isolation $pypikaArchive
+& $venvPython -m pip install --isolated --disable-pip-version-check --no-deps --no-build-isolation $pypikaArchive
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap 'pypika sdist 安装失败。'
 }
 
 Write-Host '正在将锁定 wheel 依赖安装到项目 .venv。'
-& $venvPython -m pip install --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: --requirement (Join-Path $ProjectRoot 'requirements.txt')
+& $venvPython -m pip install --isolated --disable-pip-version-check --index-url 'https://pypi.org/simple' --no-deps --only-binary=:all: --require-hashes --requirement (Join-Path $ProjectRoot 'requirements.txt')
 if ($LASTEXITCODE -ne 0) {
     Stop-Bootstrap '锁定 wheel 依赖安装失败。'
 }
