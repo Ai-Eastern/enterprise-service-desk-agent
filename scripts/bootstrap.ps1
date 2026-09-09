@@ -30,6 +30,22 @@ function Test-Python31011X64 {
     }
 }
 
+function Get-RuntimeContentManifest {
+    param([string]$Root)
+    $manifestPath = Join-Path $Root 'provenance.json'
+    $entries = [System.Collections.Generic.List[string]]::new()
+    foreach ($file in @(Get-ChildItem -LiteralPath $Root -Recurse -File -Force | Where-Object { $_.FullName -ne $manifestPath })) {
+        $relative = $file.FullName.Substring($Root.Length).TrimStart('\').Replace('\', '/')
+        $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToUpperInvariant()
+        $entries.Add("$relative`t$hash")
+    }
+    $sorted = $entries.ToArray()
+    [Array]::Sort($sorted, [StringComparer]::Ordinal)
+    $bytes = [Text.Encoding]::UTF8.GetBytes([String]::Join("`n", $sorted))
+    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+    [pscustomobject]@{ file_count = $sorted.Count; content_manifest_sha256 = [BitConverter]::ToString($digest).Replace('-', '') }
+}
+
 $baseCommand = $null
 $basePrefix = @()
 
@@ -111,22 +127,6 @@ else {
         }
         $baseCommand = $projectPython
     }
-}
-
-function Get-RuntimeContentManifest {
-    param([string]$Root)
-    $manifestPath = Join-Path $Root 'provenance.json'
-    $entries = [System.Collections.Generic.List[string]]::new()
-    foreach ($file in @(Get-ChildItem -LiteralPath $Root -Recurse -File -Force | Where-Object { $_.FullName -ne $manifestPath })) {
-        $relative = $file.FullName.Substring($Root.Length).TrimStart('\').Replace('\', '/')
-        $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToUpperInvariant()
-        $entries.Add("$relative`t$hash")
-    }
-    $sorted = $entries.ToArray()
-    [Array]::Sort($sorted, [StringComparer]::Ordinal)
-    $bytes = [Text.Encoding]::UTF8.GetBytes([String]::Join("`n", $sorted))
-    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
-    [pscustomobject]@{ file_count = $sorted.Count; content_manifest_sha256 = [Convert]::ToHexString($digest) }
 }
 
 $env:HF_HOME = Join-Path $ProjectRoot '.cache\huggingface'
